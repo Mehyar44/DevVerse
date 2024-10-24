@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 4</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            padding-top: 10px;
+        }
+        .q4 {
+            text-align: center;
+            width: 100%;
+        }
+        pre {
+            text-align: left;
+            display: inline-block;
+            margin: 0 auto;
+            margin-bottom: 5px;
+        }
+        .square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 10px;
+            background-color: #010619;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .square.selected {
+            background-color: white;
+        }
+        .square.correct {
+            background-color: green;
+        }
+        .square.wrong {
+            background-color: red;
+        }
+        .square:hover {
+            background-color: white;
+        }
+        .no-pointer {
+            pointer-events: none;
+        }
+        .check-button {
+            margin-top: 5px;
+            padding: 10px 20px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+            margin-left: 30%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .check-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            text-align: left;
+            margin-left: 32%;
+            margin-top: -10px;
+        }
+        ul li {
+            margin-bottom: 5px;
+        }
+        .star {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            opacity: 1;
+            filter: brightness(2);
+            animation: wave linear infinite;
+        }
+        @keyframes wave {
+            0% { left: 2%; }
+            50% { left: 95%; }
+            100% { left: 2%; }
+        }
+    </style>
+    <script>
+        let selectedIndex = null;
+
+        function showQuestion4() {
+            const q4 = document.querySelector('.q4');
+            const loopCount = Math.floor(Math.random() * 41) + 10;
+            const incrementValue = Math.floor(Math.random() * 4) + 2;
+            const correctAnswer = `${Math.floor(loopCount / incrementValue)} times`;
+            const uniqueWrongAnswers = new Set();
+
+            while (uniqueWrongAnswers.size < 3) {
+                const wrongAnswer = `${Math.floor(Math.random() * 25) + 1} times`;
+                if (wrongAnswer !== correctAnswer) {
+                    uniqueWrongAnswers.add(wrongAnswer);
+                }
+            }
+
+            const choices = [correctAnswer, ...Array.from(uniqueWrongAnswers)];
+            const shuffledChoices = choices.sort(() => Math.random() - 0.5);
+            const correctIndex = shuffledChoices.indexOf(correctAnswer);
+
+            q4.innerHTML = `
+                <p style="font-size: 22px;">How many times will this loop run?</p>
+                <pre style="font-size: 18px;">
+for (int i = 0; i &lt; ${loopCount}; i += ${incrementValue}) {
+                </pre>
+                <ul>
+                    ${shuffledChoices.map((choice, index) => `
+                        <li>
+                            <div class="square" data-index="${index}" onclick="selectAnswer(this)"></div>
+                            ${choice}
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="check-button" id="checkButton" onclick="checkAnswer(${correctIndex})">Check</button>
+            `;
+
+            q4.style.display = 'block';
+            createStars();
+        }
+
+        function createStars() {
+            const starContainer = document.body;
+
+            for (let i = 1; i <= 10; i++) {
+                const star = document.createElement('img');
+                star.src = `../images/star${i}.png`;
+                star.className = 'star';
+                star.style.left = Math.random() * (110) + 10 + 'vw';
+                star.style.top = Math.random() * (80 - 40) + 50 + 'vh';
+
+                const animationDuration = Math.random() * 5 + 5;
+                star.style.animationDuration = `${animationDuration}s`; 
+
+                starContainer.appendChild(star);
+            }
+        }
+
+        function selectAnswer(square) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            square.classList.add('selected');
+            selectedIndex = square.getAttribute('data-index');
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.style.display = 'block';
+        }
+
+        function checkAnswer(correctIndex) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            squares.forEach(s => s.classList.add('no-pointer'));
+
+            let counter = parseInt(localStorage.getItem('score')) || 0;
+
+            if (parseInt(selectedIndex) === correctIndex) {
+                squares[correctIndex].classList.add('correct');
+                counter++;
+            } else {
+                squares[selectedIndex].classList.add('wrong');
+                squares[correctIndex].classList.add('correct');
+            }
+
+            localStorage.setItem('score', counter);
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.innerText = 'Next';
+            checkButton.onclick = () => {
+                window.location.href = 'Q5.html';
+            };
+        }
+
+        window.onload = showQuestion4;
+    </script>
+</head>
+<body>
+    <div class="q4"></div>
+</body>
+</html>
