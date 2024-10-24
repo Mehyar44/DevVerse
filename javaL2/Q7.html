@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 7</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            padding-top: 10px;
+        }
+        .q7 {
+            text-align: center;
+            width: 100%;
+        }
+        pre {
+            text-align: center;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 10px;
+            background-color: #010619;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 5px;
+        }
+        .square.selected {
+            background-color: white;
+        }
+        .square.correct {
+            background-color: green;
+        }
+        .square.wrong {
+            background-color: red;
+        }
+        .square:hover {
+            background-color: white;
+        }
+        .no-pointer {
+            pointer-events: none;
+        }
+        .check-button {
+            margin-top: 5px;
+            padding: 8px 20px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+            margin-left: 30%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .check-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            text-align: left;
+            margin-left: 32%;
+            margin-top: -5px;
+            margin-bottom: 5px;
+        }
+        ul li {
+            margin-bottom: 10px;
+        }
+        .answer-text {
+            display: inline-block;
+            vertical-align: top;
+            line-height: 1;
+        }
+        .star {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            opacity: 1;
+            filter: brightness(2);
+            animation: wave linear infinite;
+        }
+
+        @keyframes wave {
+            0% { left: 2%; }
+            50% { left: 95%; }
+            100% { left: 2%; }
+        }
+    </style>
+    <script>
+        let selectedIndex = null;
+
+        function generateRandomNumbers() {
+            let num1 = Math.floor(Math.random() * 10);
+            let num2;
+            do {
+                num2 = Math.floor(Math.random() * 10);
+            } while (num1 === num2);
+            return { num1, num2 };
+        }
+
+        function showQuestion7() {
+            const q7 = document.querySelector('.q7');
+            const { num1, num2 } = generateRandomNumbers();
+            const correctAnswer = `${num1}${num2}`;
+            const choices = [
+                correctAnswer,
+                `${num1} + ${num2}`,
+                `${num1} + ${num2} = ${num1 + num2}`,
+                `${num1} ${num2}`
+            ];
+
+            const shuffledChoices = choices.sort(() => Math.random() - 0.5);
+            const correctAnswerIndex = shuffledChoices.indexOf(correctAnswer);
+
+            q7.innerHTML = `
+                <p style="font-size: 22px; margin-bottom: 5px;">What is the output of the following lines of code?</p>
+                <pre style="font-size: 18px;">
+System.out.print("${num1}" + ${num2});
+                </pre>
+                <ul>
+                    ${shuffledChoices.map((choice, index) => `
+                        <li>
+                            <div class="square" data-index="${index}" onclick="selectAnswer(this)"></div>
+                            <span class="answer-text">${choice}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="check-button" id="checkButton" onclick="checkAnswer(${correctAnswerIndex})">Check</button>
+            `;
+
+            q7.style.display = 'block';
+            createStars();
+        }
+
+        function createStars() {
+            const starContainer = document.body;
+
+            for (let i = 1; i <= 10; i++) {
+                const star = document.createElement('img');
+                star.src = `../images/star${i}.png`;
+                star.className = 'star';
+                star.style.left = Math.random() * (110) + 10 + 'vw';
+                star.style.top = Math.random() * (80 - 40) + 55 + 'vh';
+
+                const animationDuration = Math.random() * 5 + 5;
+                star.style.animationDuration = `${animationDuration}s`;
+
+                starContainer.appendChild(star);
+            }
+        }
+
+        function selectAnswer(square) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            square.classList.add('selected');
+            selectedIndex = square.getAttribute('data-index');
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.style.display = 'block';
+        }
+
+        function checkAnswer(correctIndex) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            squares.forEach(s => s.classList.add('no-pointer'));
+
+            let counter = parseInt(localStorage.getItem('score')) || 0;
+
+            if (parseInt(selectedIndex) === correctIndex) {
+                squares[correctIndex].classList.add('correct');
+                counter++;
+            } else {
+                squares[selectedIndex].classList.add('wrong');
+                squares[correctIndex].classList.add('correct');
+            }
+
+            localStorage.setItem('score', counter);
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.innerText = 'Next';
+            checkButton.onclick = () => {
+                window.location.href = 'Q8.html';
+            };
+        }
+
+        window.onload = showQuestion7;
+    </script>
+</head>
+<body>
+    <div class="q7"></div>
+</body>
+</html>
