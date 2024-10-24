@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java Operators and Random Numbers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 2%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>In Java, you can use special shortcuts to make math easier in your code. For example, instead of writing
+                <code>x = x + 5</code>, you can just write <code>x += 5</code>. This adds 5 to <code>x</code> and updates
+                its value. You can also subtract with <code>-=</code> (like <code>x -= 3</code>), multiply with
+                <code>*=</code> (like <code>x *= 4</code>), and divide with <code>/=</code> (like <code>x /= 2</code>).
+                There are also two very simple shortcuts: <code>x++</code> adds 1 to <code>x</code>, and
+                <code>x--</code> takes away 1. These shortcuts are useful for quickly changing numbers in your program.
+            </p>
+
+            <p>In Java, the <code>%</code> symbol is called the modulus operator, and it helps find the remainder when one
+                number is divided by another. For example, if you divide 10 by 3, the remainder is 1, so
+                <code>10 % 3</code> gives you 1. You can use <code>%</code> to see if a number is a multiple of another
+                number. For example, <code>number % 2 == 0</code> tells you if a number is even because it checks if there’s
+                no remainder when you divide by 2.
+            </p>
+
+            <p>Java also has a way to get random numbers using <code>Math.random()</code>. This gives you a random decimal
+                between 0 and 1. If you want a random whole number between two values, like between 1 and 10, you can use
+                the formula <code>int randomNumber = (int)(Math.random() * (max - min)) + min;</code>. In this formula,
+                <code>min</code> is the smallest number you want, and <code>max</code> is the largest number, minus 1. This
+                is great for games, picking random items, or creating surprises in your programs.
+            </p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
