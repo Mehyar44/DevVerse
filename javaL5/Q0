@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java While Loops</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 27%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>A <strong>while loop</strong> in Java is a way to repeat a block of code as long as a specified condition is true. It's like saying, "I want to keep doing this action until something changes." For example, if you want to count from 0 to 4, you can use a while loop to help you do it efficiently!</p>
+
+            <p>Here’s how a while loop works:</p>
+            <ul>
+                <li>You start with a condition that checks if you should keep running the loop.</li>
+                <li>If the condition is true, the code inside the loop will execute.</li>
+                <li>After executing the code, it will check the condition again. If it's still true, the loop will run again.</li>
+            </ul>
+
+            <p><strong>Example of a While Loop that Ends:</strong></p>
+            <pre><code>int count = 0;
+while (count &lt; 5) {
+    System.out.println("Count is: " + count);
+    count++; // Increment count by 1
+}</code></pre>
+            <p><strong>Explanation</strong>: In this example, the loop continues as long as <code>count</code> is less than 5. The <code>count</code> variable is incremented in each iteration, which eventually makes the condition false and exits the loop.</p>
+
+            <p><strong>Example of a While Loop that Runs Forever:</strong></p>
+            <pre><code>while (true) {
+    System.out.println("This loop will run forever!");
+}</code></pre>
+            <p><strong>Explanation</strong>: In this case, the condition <code>true</code> will always evaluate to true, causing the loop to run indefinitely. This loop will only stop if you interrupt it manually (for example, using Ctrl+C in a terminal or stopping the program in an IDE).</p>
+
+            <p><strong>Important Note</strong>: Be cautious with infinite loops, as they can lead to unresponsive programs if not handled properly! Always ensure you have a way to exit the loop if necessary.</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
