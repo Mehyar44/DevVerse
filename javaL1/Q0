@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Variables</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            text-align: left;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            flex-direction: column;
+        }
+        .container {
+            margin: 5% 20px 20px;
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+        }
+        .info {
+            font-size: 20px;
+        }
+        .next-button {
+            margin-top: 5px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+ 
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0; 
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>Variables are special boxes in a computer program used to store information, each with a name for easy access. They help us keep track of different types of data, like numbers and words, making our programs smarter and more flexible. By allowing us to organize and manage information, variables enable us to build programs that solve problems and perform calculations. Without them, programming would be confusing and difficult. In short, variables are essential tools that make it possible to create effective and dynamic applications.</p>
+
+            <p>There are different types of variables in Java:</p>
+
+            <ul>
+                <li><strong>String</strong>: For words and sentences. Use double quotes.<br>
+                    Example: <code>String greeting = "Hello";</code></li>
+
+                <li><strong>int</strong>: For whole numbers, like 1, 2, or 100. No quotes.<br>
+                    Example: <code>int age = 10;</code></li>
+
+                <li><strong>double</strong>: For numbers with parts, like 3.14 or 2.5. No quotes.<br>
+                    Example: <code>double price = 5.99;</code></li>
+
+                <li><strong>char</strong>: For a single letter or symbol. Use single quotes.<br>
+                    Example: <code>char letter = 'A';</code></li>
+
+                <li><strong>boolean</strong>: For yes or no answers. You can say either true or false.<br>
+                    Example: <code>boolean isHappy = true;</code></li>
+
+                <li><strong>final</strong>: If you want to create a variable that cannot change, use the word final before the type.<br>
+                    Example: <code>final int daysInWeek = 7;</code> (This means it will always be 7!)</li>
+            </ul>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
