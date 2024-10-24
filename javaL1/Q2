@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 2</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            padding-top: 20px;
+            overflow: hidden;
+        }
+        .q2 {
+            text-align: center;
+            width: 100%;
+            z-index: 2;
+        }
+        .square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 10px;
+            background-color: #010619;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s; 
+        }
+        .square.selected {
+            background-color: white;
+        }
+        .square.correct {
+            background-color: green;
+        }
+        .square.wrong {
+            background-color: red;
+        }
+        .square:hover {
+            background-color: white;
+        }
+        .no-pointer {
+            pointer-events: none;
+        }
+        .check-button {
+            margin-top: 10px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            display: none;
+            margin-left: 30%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .check-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            text-align: left;
+            margin-left: 32%;
+        }
+        .star {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            opacity: 1;
+            filter: brightness(2);
+            animation: wave linear infinite;
+        }
+
+        @keyframes wave {
+            0% { left: 2%; }
+            50% { left: 95%; }
+            100% { left: 2%; }
+        }
+    </style>
+    <script>
+        let selectedIndex = null;
+
+        function generateDistinctNumbers(rangeStart, rangeEnd, count) {
+            const numbers = new Set();
+            while (numbers.size < count) {
+                const randomNum = Math.floor(Math.random() * (rangeEnd - rangeStart + 1)) + rangeStart;
+                numbers.add(randomNum);
+            }
+            return Array.from(numbers);
+        }
+
+        function generateDistinctDecimals(rangeStart, rangeEnd, count) {
+            const decimals = new Set();
+            while (decimals.size < count) {
+                const randomDecimal = (Math.random() * (rangeEnd - rangeStart) + rangeStart).toFixed(1);
+                decimals.add(randomDecimal);
+            }
+            return Array.from(decimals);
+        }
+
+        function showQuestion2() {
+            const q2 = document.querySelector('.q2');
+
+            const randomWholeNumbers = generateDistinctNumbers(1, 10, 2);
+            const randomDecimals = generateDistinctDecimals(1, 10, 2);
+
+            const [intNum1, intNum2] = randomWholeNumbers;
+            const [decNum1, decNum2] = randomDecimals;
+
+            const choices = [
+                `int value = ${decNum1};`,
+                `double value = ${decNum2};`,
+                `int value = ${intNum1};`,
+                `double value = ${intNum2};`
+            ];
+
+            const shuffledChoices = choices.sort(() => Math.random() - 0.5);
+            const correctAnswerIndex = shuffledChoices.indexOf(`int value = ${decNum1};`);
+
+            q2.innerHTML = `
+                <p style="font-size: 24px;">Which of the following will result in an error?</p>
+                <ul>
+                    ${shuffledChoices.map((choice, index) => `
+                        <li>
+                            <div class="square" data-index="${index}" onclick="selectAnswer(this)"></div>
+                            ${choice}
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="check-button" id="checkButton" onclick="checkAnswer(${correctAnswerIndex})">Check</button>
+            `;
+
+            q2.style.display = 'block';
+            createStars();
+        }
+
+        function createStars() {
+            const starContainer = document.body;
+
+            for (let i = 1; i <= 10; i++) {
+                const star = document.createElement('img');
+                star.src = `../images/star${i}.png`;
+                star.className = 'star';
+                star.style.left = Math.random() * (110) + 10 + 'vw';
+                star.style.top = Math.random() * (80 - 40) + 45 + 'vh';
+
+                const animationDuration = Math.random() * 5 + 5;
+                star.style.animationDuration = `${animationDuration}s`; 
+
+                starContainer.appendChild(star);
+            }
+        }
+
+        function selectAnswer(square) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            square.classList.add('selected');
+            selectedIndex = square.getAttribute('data-index');
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.style.display = 'block';
+        }
+
+        function checkAnswer(correctIndex) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+
+            let counter = parseInt(localStorage.getItem('score')) || 0;
+
+            if (parseInt(selectedIndex) === correctIndex) {
+                squares[correctIndex].classList.add('correct');
+                counter++;
+            } else {
+                squares[selectedIndex].classList.add('wrong');
+                squares[correctIndex].classList.add('correct');
+            }
+
+            localStorage.setItem('score', counter);
+
+            squares.forEach(s => s.classList.add('no-pointer'));
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.innerText = 'Next';
+            checkButton.onclick = () => {
+                window.location.href = 'Q3.html';
+            };
+        }
+
+        window.onload = showQuestion2;
+    </script>
+</head>
+<body>
+    <div class="q2"></div>
+</body>
+</html>
