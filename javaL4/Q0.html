@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java For Loops</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 10%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>A <strong>for loop</strong> in Java is a special way to repeat a block of code a certain number of times.
+                It's like saying, "I want to do this action over and over until I reach a specific number." For example,
+                if you want to count from 1 to 5, you can use a for loop to help you do it quickly!</p>
+
+            <p>Here’s how a for loop works:</p>
+            <ul>
+                <li>First, you start counting from a number (usually 0 or 1).</li>
+                <li>Then, you say how long you want to count (like up to 5).</li>
+                <li>Finally, you tell it how to count (usually by adding 1 each time).</li>
+            </ul>
+
+            <p>This is what it looks like in Java code:</p>
+            <pre><code>for (int i = 1; i <= 5; i++) {
+    System.out.println(i);
+}</code></pre>
+
+            <p>Let’s break it down:</p>
+            <ul>
+                <li><code>int i = 1;</code> means we start counting from 1.</li>
+                <li><code>i &lt;= 5;</code> means we will keep counting as long as our number is less than or equal to 5.</li>
+                <li><code>i++</code> means that each time we count, we add 1 to our number.</li>
+            </ul>
+
+            <p>When we run this code, it will print the numbers 1, 2, 3, 4, and 5. This makes for loops great for tasks like
+                counting, going through lists of things, or repeating actions quickly without having to write the same code
+                over and over again.</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
