@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="cursor.css">
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background: #010619;
+      height: 100vh;
+      overflow: hidden;
+    }
+    .container {
+      position: relative;
+      text-align: center;
+      transition: transform 0.5s, opacity 0.1s;
+      transform-origin: 50% 50%;
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    .container img {
+      max-width: 80%;
+      max-height: 80%;
+      animation: spin 30s linear infinite;
+    }
+    .fade-out { 
+      opacity: 0; 
+      transition: opacity 0.1s; 
+    }
+    .container a {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      color: #fff;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      font-size: 30px;
+      text-decoration: none;
+      cursor: pointer;
+      opacity: 0; 
+      animation: fadeIn 2s forwards; 
+      z-index: 1; 
+      pointer-events: none; 
+    }
+    .zoom { transform: scale(50); opacity: 0; }
+
+    @keyframes fadeIn {
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img id="galaxyImage" src="images/galaxy.png" alt="Java Galaxy">
+    <a id="zoomLink" href="java.html">Java</a>
+  </div>
+  <script>
+    const zoomLink = document.getElementById('zoomLink');
+
+    zoomLink.addEventListener('animationend', () => {
+      zoomLink.style.pointerEvents = 'auto';
+    });
+
+    zoomLink.addEventListener('click', event => {
+      event.preventDefault();
+      zoomLink.classList.add('fade-out');
+      setTimeout(() => {
+        zoomLink.innerHTML = '';
+        document.querySelector('.container').classList.add('zoom');
+      }, 100);
+      setTimeout(() => location.href = event.target.href, 300);
+    });
+  </script>
+</body>
+</html>
