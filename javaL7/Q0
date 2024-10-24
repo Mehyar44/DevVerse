@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java Nested Loops</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 10%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>In Java, a <strong>nested loop</strong> is like having one loop inside another loop. This is useful when you need to repeat tasks multiple times, such as looking at rows and columns in a table.</p>
+
+            <p>Here’s how it works:</p>
+            <ul>
+                <li><strong>Outer Loop</strong>: This is the first loop that goes through each row.</li>
+                <li><strong>Inner Loop</strong>: This loop goes through each column inside the row.</li>
+            </ul>
+
+            <p>Think of it like counting in a grid! For example, if we want to print numbers in a 3x3 grid, we can use nested loops like this:</p>
+            <pre><code>for (int i = 1; i &lt;= 3; i++) {        // Outer loop for rows
+    for (int j = 1; j &lt;= 3; j++) {    // Inner loop for columns
+        System.out.print(j + " ");    // Print the column number
+    }
+    System.out.println();            // Move to the next line after each row
+}</code></pre>
+
+            <p>When we run this code, it prints:</p>
+            <pre><code>1 2 3 
+1 2 3 
+1 2 3</code></pre>
+
+            <p>This means for each row, we printed the numbers 1, 2, and 3, three times! Nested loops help us do things that need more than one step, just like counting rows and columns in a table.</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
