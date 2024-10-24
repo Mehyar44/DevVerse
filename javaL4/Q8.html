@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 8 - Level 4</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            flex-direction: column;
+        }
+        .result {
+            text-align: center;
+            font-size: 35px;
+        }
+        .message {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+        .restart-button {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        .restart-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        const pass = [
+            "You’re a star!",
+            "Startacular!",
+            "Out of this world!",
+            "You’re lightyears ahead!",
+            "Stellar skills!",
+            "Bright like a star!",
+            "You’re orbiting success!",
+            "Serious moon-mentum!",
+            "Shooting for the stars!",
+            "Black hole of brilliance!"
+        ];
+
+        const fail = [
+            "Try again!",
+            "You've got this!",
+            "Give it another shot!",
+            "Almost there!",
+            "Not quite!",
+            "Keep going!",
+            "You're getting there!",
+            "Have another go!",
+            "Don't give up!",
+            "One more try!"
+        ];
+
+        function showResult() {
+            const counter = parseInt(localStorage.getItem('score')) || 0;
+            const totalQuestions = 7;
+            const decimalScore = counter / totalQuestions;
+            const resultContainer = document.querySelector('.result');
+            let message = '';
+
+            if (decimalScore > 0.5) {
+                message = `<div class="message">${pass[Math.floor(Math.random() * pass.length)]}</div>`;
+            } else {
+                message = `<div class="message">${fail[Math.floor(Math.random() * fail.length)]}</div>`;
+            }
+
+            resultContainer.innerHTML = `
+                ${message}
+                <p>Score: ${counter} / ${totalQuestions}</p>
+                <button class="restart-button" onclick="back()">Back to Levels</button>
+            `;
+        }
+
+        function back() {
+            const counter = parseInt(localStorage.getItem('score')) || 0;
+            const decimalScore = counter / 7;
+            const existingScore4 = parseFloat(localStorage.getItem('score4')) || 0;
+
+            if (decimalScore > existingScore4) {
+                localStorage.setItem('score4', decimalScore);
+            }
+
+            localStorage.setItem('score', 0);
+            window.location.href = '/java.html'; 
+        }
+
+        window.onload = showResult;
+    </script>
+</head>
+<body>
+    <div class="result"></div>
+</body>
+</html>
