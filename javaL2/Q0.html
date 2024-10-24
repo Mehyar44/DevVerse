@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Strings and Concatenation</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 17%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p><code>String</code> variables are used to store text, and this text is always enclosed in double quotes.
+                It's important to remember that every statement should end with a semicolon (<code>;</code>). To display
+                text to the user, you can use <code>System.out.println();</code>, which prints the text and moves the
+                cursor to a new line, or <code>System.out.print();</code>, which prints the text on the same line. If
+                you want to start a new line within your text, simply use <code>\n</code> within the quotations of your
+                text.</p>
+
+            <p>You can also concatenate strings with other strings using the <code>+</code> operator. For example:</p>
+            <pre><code>System.out.println("Hello, " + "world!");</code></pre>
+            <p>This will output: <code>Hello, world!</code>.</p>
+
+            <p>Additionally, you can combine strings with other data types, such as integers and doubles, using
+                concatenation. This is done by placing the <code>+</code> operator between the strings and the values.
+                For example, if you want to display a message with a name and an age, you can write:</p>
+            <pre><code>System.out.println("My name is Alice and I am " + 25 + " years old.");</code></pre>
+            <p>This will output: <code>My name is Alice and I am 25 years old.</code></p>
+
+            <p>You can also add integers and doubles directly in your print statements. For example:</p>
+            <pre><code>System.out.println("The total is: " + (10 + 20 + 15.5));</code></pre>
+            <p>This will output: <code>The total is: 45.5.</code> When adding numbers in a string context, it's
+                important to use parentheses to ensure the addition occurs before the concatenation, allowing for
+                accurate calculations in your output.</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
