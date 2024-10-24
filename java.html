@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="cursor.css">
+  <style>
+    body {
+      background: #010619;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      height: 100vh;
+      color: white;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      position: relative;
+    }
+    .stars-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 2s;
+    }
+    .stars-container img {
+      height: 45px;
+      width: auto;
+      display: none;
+      transition: transform 0.3s;
+    }
+    .blinking {
+      animation: blink 1s ease-in-out infinite;
+    }
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0; }
+    }
+    .container {
+      gap: 7px;
+    }
+    .large-star {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 180px;
+      height: 180px;
+      transition: transform 0.75s;
+      margin-top: 0px;
+    }
+    .large-star img {
+      height: 180px;
+      width: auto;
+      opacity: 0;
+      transition: opacity 2s;
+      animation: rotate 10s linear infinite;
+    }
+    .large-star .level-1 {
+      position: absolute;
+      color: black;
+      font-size: 1.5em;
+      font-weight: bold;
+      opacity: 0;
+      transition: opacity 2s;
+      z-index: 1;
+      pointer-events: none;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .disabled {
+      pointer-events: none;
+    }
+    .objects-container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .objects-container img {
+      height: 80px;
+      width: auto;
+      display: none;
+      opacity: 0;
+      transition: opacity 2s;
+    }
+    .random-object {
+      height: 50px;
+      width: auto;
+      position: absolute;
+      opacity: 0;
+      transition: opacity 2s;
+    }
+  </style>
+</head>
+<body>
+  <script>
+    const starSources = [
+      "images/star1.png", "images/star2.png", 
+      "images/star3.png", "images/star4.png", 
+      "images/star5.png", "images/star6.png", 
+      "images/star7.png", "images/star8.png", 
+      "images/star9.png", "images/star10.png",
+    ];
+
+    const objectSources = [
+      "images/object1.png", "images/object2.png", 
+      "images/object3.png", "images/object4.png", 
+      "images/object5.png", "images/object6.png", 
+      "images/object7.png", "images/object8.png", 
+      "images/object9.png", "images/object10.png",
+      "images/object11.png", "images/object12.png", 
+      "images/object13.png", "images/object14.png",
+      "images/object15.png", "images/object16.png",
+      "images/object17.png", "images/object18.png",
+      "images/object19.png", "images/object20.png",
+      "images/object21.png", "images/object22.png",
+      "images/object23.png", "images/object24.png",
+    ];
+
+    function createStars(container) {
+      starSources.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Star ${src.split('-').pop()}`;
+        container.appendChild(img);
+      });
+    }
+
+    function createObjects() {
+      const container = document.createElement('div');
+      container.className = 'objects-container';
+      objectSources.forEach(src => {
+        const img = document.createElement('img');
+        img.src = src;
+        img.alt = `Object ${src.split('/').pop()}`;
+        container.appendChild(img);
+      });
+      document.body.appendChild(container);
+    }
+
+    function getRandomStars(container) {
+      return Array.from(container.querySelectorAll('img'))
+        .sort(() => 0.5 - Math.random())
+        .slice(0, 4);
+    }
+
+    function displayStars(container) {
+      const stars = getRandomStars(container);
+      stars.forEach(img => {
+        img.style.display = 'inline';
+        img.style.transform = `rotate(${Math.random() * 360}deg)`;
+      });
+      blinkStars(container);
+    }
+
+    function blinkStars(container) {
+      const stars = Array.from(container.querySelectorAll('img')).filter(img => img.style.display === 'inline');
+      if (stars.length === 0) return;
+
+      function blink() {
+        const visibleStars = stars.filter(img => img.style.display === 'inline');
+        if (visibleStars.length === 0) return;
+
+        visibleStars.forEach(img => img.classList.remove('blinking'));
+        const star = visibleStars[Math.floor(Math.random() * visibleStars.length)];
+        star.classList.add('blinking');
+
+        setTimeout(() => {
+          star.classList.remove('blinking');
+          setTimeout(blink, Math.random() * 9000 + 1000);
+        }, 1000);
+      }
+
+      const delay = Math.random() * 9000 + 1000;
+      setTimeout(blink, delay);
+    }
+
+    function createContainer(index) {
+      const container = document.createElement('div');
+      container.className = 'stars-container container';
+      createStars(container);
+      document.body.appendChild(container);
+      displayStars(container);
+      setTimeout(() => {
+        container.style.opacity = '1';
+      }, 100);
+    }
+
+    function setRandomLargeStar(index) {
+      const randomIndex = Math.floor(Math.random() * starSources.length);
+      const randomStar = starSources[randomIndex];
+      const largeStarImage = document.createElement('img');
+      largeStarImage.src = randomStar;
+      largeStarImage.id = `largeStarImage${index}`;
+      largeStarImage.alt = `Large Star ${index + 1}`;
+
+      const largeStarLabel = document.createElement('div');
+      largeStarLabel.className = 'level-1';
+      largeStarLabel.id = `largeStarLabel${index}`;
+      largeStarLabel.textContent = `${index + 1}`;
+
+      const largeStar = document.createElement('a');
+      largeStar.href = `javaL${index + 1}/Q0.html`;
+      largeStar.className = 'large-star disabled';
+
+      largeStar.addEventListener('click', (event) => {
+        event.preventDefault();
+        if (largeStar.classList.contains('disabled')) return;
+        largeStar.style.zIndex = '10';
+        largeStarLabel.style.color = 'white';
+        largeStar.style.transform += ' scale(100)';
+        setTimeout(() => {
+          window.location.href = largeStar.href;
+        }, 100);
+      });
+
+      largeStar.appendChild(largeStarImage);
+      largeStar.appendChild(largeStarLabel);
+      document.body.appendChild(largeStar);
+
+      setTimeout(() => {
+        largeStarImage.style.opacity = '1';
+        largeStarLabel.style.opacity = '1';
+
+        setTimeout(() => {
+          largeStar.classList.remove('disabled');
+        }, 2000);
+      }, 100);
+
+      const score = parseFloat(localStorage.getItem(`score${index + 1}`)) || 0;
+
+      if (score >= 1) {
+        largeStarLabel.style.color = 'rgb(212, 167, 4)';
+      } else if (score >= 0.5) {
+        largeStarLabel.style.color = 'rgb(39, 99, 21)';
+      }
+    }
+
+    function displayRandomObject(top, left) {
+      const randomIndex = Math.floor(Math.random() * objectSources.length);
+      const randomObjectImg = document.createElement('img');
+      randomObjectImg.src = objectSources[randomIndex];
+      randomObjectImg.alt = `Object ${randomIndex}`;
+      randomObjectImg.className = 'random-object';
+      randomObjectImg.style.top = top;
+      randomObjectImg.style.left = left;
+      randomObjectImg.style.transform = `rotate(${Math.random() * 360}deg)`;
+
+      document.body.appendChild(randomObjectImg);
+      setTimeout(() => {
+        randomObjectImg.style.opacity = '1';
+      }, 100);
+
+      randomObjectImg.style.opacity = '0';
+    }
+
+    for (let i = 0; i < 4; i++) {
+      createContainer(i);
+    }
+    for (let i = 0; i < 11; i++) {
+      setRandomLargeStar(i);
+      for (let j = 0; j < 4; j++) {
+        createContainer(j);
+      }
+    }
+
+    let isFirstRange1 = true;
+    for (let i1 = 625; i1 > 0; i1 -= 10) {
+      let secondValue1;
+      if (isFirstRange1) {
+        secondValue1 = Math.floor(Math.random() * 16) + 5;
+        if (secondValue1 > 20) secondValue1 = 20;
+      } else {
+        secondValue1 = Math.floor(Math.random() * 15) + 21;
+      }
+      displayRandomObject(`${i1}%`, `${secondValue1}%`);
+      isFirstRange1 = !isFirstRange1;
+    }
+
+    let isFirstRange2 = true;
+    for (let i2 = 625; i2 > 0; i2 -= 10) {
+      let secondValue2;
+      if (isFirstRange2) {
+        secondValue2 = Math.floor(Math.random() * 16) + 60;
+        if (secondValue2 > 75) secondValue2 = 75;
+      } else {
+        secondValue2 = Math.floor(Math.random() * 15) + 76;
+      }
+      displayRandomObject(`${i2}%`, `${secondValue2}%`);
+      isFirstRange2 = !isFirstRange2;
+    }
+
+    createObjects();
+  </script>
+</body>
+</html>
