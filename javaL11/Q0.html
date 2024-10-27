@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java ArrayLists</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 0;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>In Java, a 2D array is an array of arrays, allowing you to organize data in a grid with rows and columns. For example, <code>int[][] grid = new int[3][4];</code> creates a grid with 3 rows and 4 columns. To access an element, you use two indices, like <code>grid[1][2]</code> for the item in the second row and third column.</p>
+
+            <p>2D arrays are useful for representing tabular data, such as a seating chart or a game board. You can use <code>.length</code> to get the number of rows or columns, and nested loops are often used to process or display all elements in the grid. For example, if you want to find out how many rows and columns your grid has, you can use <code>grid.length</code> to get the number of rows and <code>grid[0].length</code> to get the number of columns. This information can help you manage the data more effectively and ensure that you don't try to access an index that doesn't exist.</p>
+
+            <p>Here’s an example:</p>
+            <pre><code>int[][] grid = new int[3][4];
+int numberOfRows = grid.length;         // This will be 3
+int numberOfColumns = grid[0].length;  // This will be 4</code></pre>
+
+            <p>2D arrays are a great way to keep things organized in Java!</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
