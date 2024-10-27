@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java Arrays</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 5%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>An array in Java is like a special box that can hold a list of things, all of the same type, like numbers or names. Each item in the list has its own number, starting from 0, so you know where to find it. Think of it like a row of cubbies where each cubby has a number on it. Arrays are useful because they let you store and organize many pieces of information in one place, making it easier to work with them all at once.</p>
+
+            <p>For example, if you wanted to keep track of your favorite numbers, you could make an array like this:</p>
+            <pre><code>int[] numbers = {10, 20, 30, 40, 50};</code></pre>
+
+            <p>This array holds five numbers: 10, 20, 30, 40, and 50. Each number is stored in a numbered spot, starting from 0. To get the first number (10), you would ask for the number at index 0:</p>
+            <pre><code>int firstNumber = numbers[0]; // Gets 10</code></pre>
+
+            <p>If you wanted to change the third number (which is 30) to 35, you’d do this:</p>
+            <pre><code>numbers[2] = 35; // Changes the third number to 35</code></pre>
+
+            <p>Arrays help us quickly manage lots of data in an organized way, just like using numbered cubbies to keep track of things.</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
