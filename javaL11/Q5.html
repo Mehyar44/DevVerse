@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 5 - Level 9</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            padding-top: 10px;
+        }
+
+        .q5 {
+            text-align: center;
+            width: 100%;
+        }
+
+        pre {
+            text-align: left;
+            display: inline-block;
+            margin: 0 auto;
+            margin-bottom: 5px;
+        }
+
+        .square {
+            width: 20px;
+            height: 20px;
+            display: inline-block;
+            margin-right: 10px;
+            background-color: #010619;
+            border: 2px solid white;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .square.selected {
+            background-color: white;
+        }
+
+        .square.correct {
+            background-color: green;
+        }
+
+        .square.wrong {
+            background-color: red;
+        }
+
+        .square:hover {
+            background-color: white;
+        }
+
+        .no-pointer {
+            pointer-events: none;
+        }
+
+        .check-button {
+            margin-top: 5px;
+            padding: 10px 20px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            display: none;
+            margin-left: 30%;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .check-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+            text-align: left;
+            margin-left: 32%;
+            margin-top: -10px;
+        }
+
+        ul li {
+            margin-bottom: 5px;
+        }
+
+        .star {
+            position: absolute;
+            width: 50px;
+            height: auto;
+            opacity: 1;
+            filter: brightness(2);
+            animation: wave linear infinite;
+        }
+
+        @keyframes wave {
+            0% { left: 2%; }
+            50% { left: 95%; }
+            100% { left: 2%; }
+        }
+    </style>
+    <script>
+        let selectedIndex = null;
+
+        function getRandomUniqueNumbers(count, min, max) {
+            const uniqueNumbers = new Set();
+
+            while (uniqueNumbers.size < count) {
+                const randomNum = Math.floor(Math.random() * (max - min + 1)) + min;
+                uniqueNumbers.add(randomNum);
+            }
+
+            return Array.from(uniqueNumbers);
+        }
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function getRandomChoices(correctAnswer) {
+            const choices = new Set([correctAnswer]);
+
+            while (choices.size < 4) {
+                const randomNumber = Math.floor(Math.random() * 10) + 1;
+                choices.add(randomNumber);
+            }
+
+            return shuffleArray(Array.from(choices));
+        }
+
+        function showQuestion() {
+            const q5 = document.querySelector('.q5');
+            const randomNumbers = getRandomUniqueNumbers(6, 1, 10);
+            const grid = [
+                [randomNumbers[0], randomNumbers[1], randomNumbers[2]],
+                [randomNumbers[3], randomNumbers[4], randomNumbers[5]]
+            ];
+
+            const rowIndex = Math.floor(Math.random() * 2);
+            const colIndex = Math.floor(Math.random() * 3);
+
+            const codeSnippet = `
+int[][] grid = {{${grid[0].join(', ')}}, {${grid[1].join(', ')}}};
+System.out.println(grid[${rowIndex}][${colIndex}]);
+            `;
+
+            const correctAnswer = grid[rowIndex][colIndex];
+            const answerChoices = getRandomChoices(correctAnswer);
+            const correctIndex = answerChoices.indexOf(correctAnswer);
+
+            q5.innerHTML = `
+                <p style="font-size: 22px;">What is the output of the following code?</p>
+                <pre style="font-size: 18px;">${codeSnippet}</pre>
+                <ul>
+                    ${answerChoices.map((choice, index) => `
+                        <li>
+                            <div class="square" data-index="${index}" onclick="selectAnswer(this)"></div>
+                            ${choice}
+                        </li>
+                    `).join('')}
+                </ul>
+                <button class="check-button" id="checkButton" onclick="checkAnswer(${correctIndex})">Check</button>
+            `;
+
+            q5.style.display = 'block';
+            createStars();
+        }
+
+        function createStars() {
+            const starContainer = document.body;
+
+            for (let i = 1; i <= 10; i++) {
+                const star = document.createElement('img');
+                star.src = `../images/star${i}.png`;
+                star.className = 'star';
+                star.style.left = Math.random() * (110) + 10 + 'vw';
+                star.style.top = Math.random() * (80 - 40) + 55 + 'vh';
+
+                const animationDuration = Math.random() * 5 + 5;
+                star.style.animationDuration = `${animationDuration}s`;
+
+                starContainer.appendChild(star);
+            }
+        }
+
+        function selectAnswer(square) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            square.classList.add('selected');
+            selectedIndex = square.getAttribute('data-index');
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.style.display = 'block';
+        }
+
+        function checkAnswer(correctIndex) {
+            const squares = document.querySelectorAll('.square');
+            squares.forEach(s => s.classList.remove('selected'));
+            squares.forEach(s => s.classList.add('no-pointer'));
+
+            let counter = parseInt(localStorage.getItem('score')) || 0;
+
+            if (parseInt(selectedIndex) === correctIndex) {
+                squares[correctIndex].classList.add('correct');
+                counter++;
+            } else {
+                squares[selectedIndex].classList.add('wrong');
+                squares[correctIndex].classList.add('correct');
+            }
+
+            localStorage.setItem('score', counter);
+
+            const checkButton = document.getElementById('checkButton');
+            checkButton.innerText = 'Next';
+            checkButton.onclick = () => {
+                window.location.href = 'Q6.html';
+            };
+        }
+
+        window.onload = showQuestion;
+    </script>
+</head>
+<body>
+    <div class="q5"></div>
+</body>
+</html>
