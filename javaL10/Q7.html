@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question 7 - Level 10</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+            flex-direction: column;
+        }
+
+        .result {
+            text-align: center;
+            font-size: 35px;
+        }
+
+        .message {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .restart-button {
+            margin-top: 15px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 25px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .restart-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        const pass = [
+            "You're a supernova!",
+            "Galactic genius!",
+            "Beyond the Milky Way!",
+            "Orbiting excellence!",
+            "Astronomical skills!",
+            "Interstellar intelligence!",
+            "You're on a cosmic journey!",
+            "Starship success!",
+            "Lightyears ahead!",
+            "Planetary prowess!"
+        ];
+
+        const fail = [
+            "Try again!",
+            "You've got this!",
+            "Give it another shot!",
+            "Almost there!",
+            "Not quite!",
+            "Keep going!",
+            "You're getting there!",
+            "Have another go!",
+            "Don't give up!",
+            "One more try!"
+        ];
+
+        function showResult() {
+            const counter = parseInt(localStorage.getItem('score')) || 0;
+            const totalQuestions = 6;
+            const decimalScore = counter / totalQuestions;
+            const resultContainer = document.querySelector('.result');
+            let message = '';
+
+            if (decimalScore > 0.5) {
+                message = `<div class="message">${pass[Math.floor(Math.random() * pass.length)]}</div>`;
+            } else {
+                message = `<div class="message">${fail[Math.floor(Math.random() * fail.length)]}</div>`;
+            }
+
+            resultContainer.innerHTML = `
+                ${message}
+                <p>Score: ${counter} / ${totalQuestions}</p>
+                <button class="restart-button" onclick="back()">Back to Levels</button>
+            `;
+        }
+
+        function back() {
+            const counter = parseInt(localStorage.getItem('score')) || 0;
+            const decimalScore = counter / 6;
+            const existingScore10 = parseFloat(localStorage.getItem('score10')) || 0;
+
+            if (decimalScore > existingScore10) {
+                localStorage.setItem('score10', decimalScore);
+            }
+
+            localStorage.setItem('score', 0);
+            window.location.href = '/java.html';
+        }
+
+        window.onload = showResult;
+    </script>
+</head>
+<body>
+    <div class="result"></div>
+</body>
+</html>
