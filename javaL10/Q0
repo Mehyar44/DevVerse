@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java ArrayLists</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center; 
+            height: 100vh; 
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify; 
+            margin-top: 2%; 
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px; 
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0; 
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>An <code>ArrayList</code> in Java is like a flexible version of an array. While an array has a fixed size, an <code>ArrayList</code> can grow or shrink as needed. This makes it great for situations where you don’t know how many items you’ll need to store. You can add, remove, or update items in the <code>ArrayList</code> easily using built-in methods. For example, to add an item, you use <code>add()</code>, and to find out how many items are in the list, you use the <code>.size()</code> method.</p>
+
+            <p>Here’s an example of how to create an <code>ArrayList</code>:</p>
+            <pre><code>ArrayList&lt;String&gt; fruits = new ArrayList&lt;&gt;();
+fruits.add("Apple");
+fruits.add("Banana");
+fruits.add("Cherry");</code></pre>
+
+            <p>In this example, we created an <code>ArrayList</code> that holds strings. We added three fruits: "Apple," "Banana," and "Cherry." If you wanted to remove "Banana," you would use <code>fruits.remove("Banana");</code>, and the <code>ArrayList</code> would shrink automatically. To get the size of the list, you can use <code>fruits.size()</code>, and to get a specific item, you can use <code>fruits.get(0)</code> to get "Apple," the first item.</p>
+
+            <p><code>ArrayList</code> methods help you manage lists of data in a more flexible and dynamic way compared to regular arrays.</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
