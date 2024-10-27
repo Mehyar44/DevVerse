@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding Java Arrays</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../cursor.css">
+    <style>
+        body {
+            background-color: #010619;
+            color: white;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: 'Orbitron', sans-serif;
+        }
+
+        .container {
+            max-width: 800px;
+            padding: 20px;
+            text-align: justify;
+            margin-top: 6%;
+        }
+
+        .info {
+            font-size: 20px;
+        }
+
+        .next-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            background-color: #010619;
+            color: white;
+            border: 2px solid white;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 20px;
+            font-family: 'Orbitron', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .next-button:hover {
+            background-color: white;
+            color: black;
+            border-color: white;
+        }
+    </style>
+    <script>
+        let counter = 0;
+
+        function saveCounter() {
+            localStorage.setItem('score', counter);
+        }
+
+        function loadCounter() {
+            counter = 0;
+        }
+
+        window.onload = loadCounter;
+    </script>
+</head>
+<body>
+    <div class="container">
+        <div class="info">
+            <p>In Java, arrays are like special lists that help you keep things organized. The <code>.length</code> property tells you how many items are in your list. For example, if you have a list of 5 numbers, using <code>array.length</code> will tell you that there are 5 items.</p>
+
+            <p>Here's an example:</p>
+            <pre><code>int[] numbers = {1, 2, 3, 4, 5};
+System.out.println(numbers.length); // This will print: 5</code></pre>
+
+            <p>This is helpful because it stops you from trying to get something that isn’t there.</p>
+
+            <p>You can also do other things with arrays. For example:</p>
+            <ul>
+                <li><code>Arrays.sort()</code> will put your list in order.</li>
+                <li><code>Arrays.toString()</code> lets you see everything in the list as a string, like this:</li>
+            </ul>
+
+            <p>Example:</p>
+            <pre><code>int[] numbers = {5, 2, 8, 3};
+Arrays.sort(numbers); // Sorts the numbers: {2, 3, 5, 8}
+System.out.println(Arrays.toString(numbers)); // Prints: [2, 3, 5, 8]</code></pre>
+
+            <p>These tools make working with arrays much easier!</p>
+        </div>
+        <button class="next-button" onclick="window.location.href='Q1.html'; saveCounter();">Next</button>
+    </div>
+</body>
+</html>
